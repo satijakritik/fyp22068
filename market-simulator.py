@@ -21,8 +21,10 @@ def print_message(conn: Connection, response: WebSocketResponse):
         return
     
     data = response.result
-    orders.append(data)
-    curr_snapshot += 1
+    if list(data.keys())[0] != "status":
+        orders.append(data)
+        curr_snapshot += 1
+    
     if curr_snapshot >= NUM_OF_SNAPSHOTS:
         conn.close()
         return
@@ -39,7 +41,14 @@ async def main():
 
     # subscribe to any channel you are interested into, with the callback function
     channel = SpotOrderBookChannel(conn, print_message)
+    
+    # start_time = time.perf_counter()
+    
     channel.subscribe([channel_name, depth, update_rate])
+    
+    # end_time = time.perf_counter()
+    
+    # print(f"Time: {end_time - start_time}")
 
     # start the client
     await conn.run()
@@ -50,4 +59,7 @@ async def main():
         file.write(data)
 
 if __name__ == '__main__':
+    start_time = time.perf_counter()
     asyncio.run(main())
+    end_time = time.perf_counter()
+    print(f"Time: {end_time - start_time}")
