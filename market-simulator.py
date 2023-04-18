@@ -5,6 +5,7 @@ import sys
 import pandas as pd
 import os
 import warnings
+import cProfile, pstats
 
 from gate_ws import Configuration, Connection, WebSocketResponse
 from gate_ws.spot import SpotPublicTradeChannel, SpotOrderBookChannel, SpotOrderBookUpdateChannel, SpotBookTickerChannel
@@ -22,7 +23,7 @@ settings = {
     "update_rate": "1000ms"
     }
 
-TIMEOUT = 60 #secs
+TIMEOUT = 10 #secs
 
 NUM_OF_SNAPSHOTS = 5
 curr_snapshot = 0
@@ -168,7 +169,10 @@ async def order_stream():
     # update_rate = "1000ms"
     
     conn = Connection(Configuration())
+    # time_start = time.perf_counter()
     channel = SpotBookTickerChannel(conn, check)
+    # time_end = time.perf_counter()
+    # print(f"{time_end - time_start}, {TIMEOUT}")
     channel.subscribe([settings["channel_name"]])
     
     await conn.run()
@@ -309,7 +313,8 @@ def main():
         elif cmd == "4":
             print()
             print("Thank you for using the exchange simulator!")
-            exit(0)
+            # exit(0)
+            return
         else:
             print_invalid_msg()
             main()
@@ -401,4 +406,12 @@ def main():
         
         
 if __name__ == "__main__":
+    # profiler = cProfile.Profile()
+    # profiler.enable()
+    # main()
+    # profiler.disable()
+    # stats = pstats.Stats(profiler).sort_stats('tottime')
+    # stats.print_stats(10)
+    # cProfile.run('main()')
+    # main()
     main()
