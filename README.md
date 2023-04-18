@@ -30,9 +30,17 @@ conda activate crypto-market-simulator
 pip install -r requirements.txt
 ```
 
-## Running the simulator
+### Running the simulator
 
-Run the file `market-simulator.py` to start the simulator
+Run the file `market-simulator.py` in the market-simulator directory to start the simulator
 ```
 python market-simulator.py
 ```
+
+### Running the Reinforcement Learning model
+
+In the reinforcement-learning directory, run the reinforcement-learning.ipynb file using Jupyter Notebook. Run all the cells
+
+### Running the Microprice algorithm
+
+In the microprice directory, run the microprice.ipynb file using Jupyter Notebook. Run all the cells
