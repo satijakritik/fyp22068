@@ -21,7 +21,7 @@ This is the implementation for our FYP titled "Optimal Order Placement in Crypto
 
 ### Environment
 
-Create virtual environment using Anaconda.
+Create virtual environment using pipenv, conda, or any other virtual environment creator. The example below is using conda:
 ```
 conda create -n crypto-market-simulator python=3.x
 conda activate crypto-market-simulator
@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 ## Running the simulator
 
-Run the file `market-simulator.py` to start the simulator:
+Run the file `market-simulator.py` to start the simulator
 ```
 python market-simulator.py
 ```
