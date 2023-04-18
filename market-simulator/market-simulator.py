@@ -81,11 +81,11 @@ def clean_orderbook():
 
     return df2
     
-def place_market_order(side = "buy", price = 10000, qty = 1):
+def place_market_order(side = "buy", price = 10000):
     asyncio.run(generate_orderbook())
     df = clean_orderbook()
     
-    order = [side, price, qty]
+    order = [side, price]
     all_market_orders.append(order)
     
     dollar_value = float(price)
@@ -119,9 +119,13 @@ def place_market_order(side = "buy", price = 10000, qty = 1):
         avg_price = dollar_value / total_qty
         price.append(avg_price)
     
-    print(df)
+    # print(df)
     
-    print(price)
+    print(f"Average price: {price[0]}")
+    
+    os.system('rm orderbook.json')
+    
+    
 
 
 def check(conn: Connection, response: WebSocketResponse):
@@ -141,25 +145,25 @@ def check(conn: Connection, response: WebSocketResponse):
     
     if list(data.keys())[0] != "status":
         best_local = float(data[f"{side}"])
-        if best_local != best_global: #check if value of best bid/ask price has changed
-            best_global = best_local
-            print(f"order_price: {price}, best_{side}_local = {best_local}")
-            if side == "b":
-                if price < best_local:
-                    print(f"Order executed at price: {best_local}")
-                    order = [side, price, qty]
-                    all_limit_orders.append(order)
-                    limit_orders.clear()
-                    conn.close()
-                    return
-            if side == "a":
-                if price > best_local:
-                    print(f"Order executed at price: {best_local}")
-                    order = [side, price, qty]
-                    all_limit_orders.append(order)
-                    limit_orders.clear()
-                    conn.close()
-                    return
+        # if best_local != best_global: #check if value of best bid/ask price has changed
+        #     best_global = best_local
+        print(f"order_price: {price}, best_{side}_local = {best_local}")
+        if side == "b":
+            if price < best_local:
+                print(f"Order executed at price: {best_local}")
+                order = [side, price, qty]
+                all_limit_orders.append(order)
+                limit_orders.clear()
+                conn.close()
+                return
+        if side == "a":
+            if price > best_local:
+                print(f"Order executed at price: {best_local}")
+                order = [side, price, qty]
+                all_limit_orders.append(order)
+                limit_orders.clear()
+                conn.close()
+                return
             
         
 async def order_stream():
@@ -215,7 +219,14 @@ def print_back_msg():
     print()
     input("Press [ENTER] to continue")
 
-def take_input():
+def take_input_market():
+    type = input("side (buy/sell): ")
+    notional = input("notional: ")
+    print()
+    
+    return type, notional
+
+def take_input_limit():
     type = input("side (buy/sell): ")
     price = input("price: ")
     qty = input("qty: ")
@@ -327,7 +338,6 @@ def main():
         if order_type == "1":
             curr_state = STATES[2] #market_order
             main()
-            # place_market_order()
         elif order_type == "2":
             curr_state = STATES[3] #limit_order
             main()
@@ -341,9 +351,9 @@ def main():
     elif curr_state == "market_order":
         print_market_order_msg()
         
-        type, price, qty = take_input()
+        type, price = take_input_market()
         
-        place_market_order(type, price, qty)
+        place_market_order(type, price)
         
         print_back_msg()
         
@@ -353,7 +363,7 @@ def main():
     elif curr_state == "limit_order":
         print_limit_order_msg()
         
-        type, price, qty = take_input()
+        type, price, qty = take_input_limit()
         
         asyncio.run(place_limit_order(type, price, qty))
         
@@ -406,12 +416,4 @@ def main():
         
         
 if __name__ == "__main__":
-    # profiler = cProfile.Profile()
-    # profiler.enable()
-    # main()
-    # profiler.disable()
-    # stats = pstats.Stats(profiler).sort_stats('tottime')
-    # stats.print_stats(10)
-    # cProfile.run('main()')
-    # main()
     main()
