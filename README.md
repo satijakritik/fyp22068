@@ -10,10 +10,12 @@ This is the implementation for our FYP titled "Optimal Order Placement in Crypto
 
 ## Contributions
 
-| Component                   | Tools Used | Contributor(s)           |
-|-----------------------------|------------|--------------------------|
-| Exchange Simulator          | Python     | Kritik, Raghav           |
-| Front-end                   | PyQT5      | Muttasif                 |
+| Component                          | Tools Used | Contributor(s)    |
+|------------------------------------|------------|-------------------|
+| Exchange Simulator                 | Python     | Kritik, Raghav    |
+| Deep Q-Network algorithm           | Python     | Kritik            |
+| Microprice algorithm               | Python     | Raghav            |
+| Front-end                          | PyQt5      | Muttasif          |
 
 *******
 
