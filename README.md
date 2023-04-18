@@ -1,4 +1,4 @@
-# crypto-market-simulator
+# fyp22068
 
 This is the implementation for our FYP titled "Optimal Order Placement in Cryptocurrency Markets" for the COMP4801 course.
 
@@ -44,3 +44,7 @@ In the reinforcement-learning directory, run the reinforcement-learning.ipynb fi
 ### Running the Microprice algorithm
 
 In the microprice directory, run the microprice.ipynb file using Jupyter Notebook. Run all the cells
+
+### Running Data Analytics
+
+In the data-analytics directory, run the data_collection.ipynb file using Jupyter Notebook. Run all the cells. This will generate the required csv files for analytics.ipynb. For convenience, a csv file has been provided for analysis
