@@ -15,7 +15,7 @@ This is the implementation for our FYP titled "Optimal Order Placement in Crypto
 | Exchange Simulator                 | Python     | Kritik, Raghav    |
 | Deep Q-Network algorithm           | Python     | Kritik            |
 | Microprice algorithm               | Python     | Raghav            |
-| Front-end                          | PyQt5      | Muttasif          |
+| ~~Front-end~~                          | ~~PyQt5~~      | ~~Muttasif~~          |
 
 *******
 
